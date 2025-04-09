@@ -1,0 +1,16 @@
+package com.devsu.bank.domain.model;
+
+import com.devsu.bank.domain.model.enums.AccountStatus;
+import com.devsu.bank.domain.model.enums.AccountType;
+
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
+public class Account {
+
+	private Long accountId;
+	private String accountNumber;
+	private AccountType type;
+	private final String inicialBalance;
+	private AccountStatus status;
+}

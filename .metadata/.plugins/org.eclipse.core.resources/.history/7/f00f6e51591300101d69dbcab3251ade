@@ -1,0 +1,22 @@
+package com.devsu.bank.infraestructure.database.mysql.adapter;
+
+import java.util.List;
+
+import com.devsu.bank.domain.model.Account;
+import com.devsu.bank.domain.model.repository.RepositoryPort;
+
+public class AccountRepositoryAdapter implements RepositoryPort {
+
+	@Override
+	public List<Account> findAccountsByClientId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Account saveAccount(Account account) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

@@ -1,0 +1,10 @@
+package com.devsu.bank.usecase;
+
+import java.util.Optional;
+
+import com.devsu.bank.domain.model.Movement;
+
+public interface IMovementInterator {
+	Optional<Movement> findObjectById(Long id);
+	Movement saveObject(Movement movement);
+}

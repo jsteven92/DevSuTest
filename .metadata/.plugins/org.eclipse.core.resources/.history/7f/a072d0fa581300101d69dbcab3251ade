@@ -1,0 +1,5 @@
+package com.devsu.bank.domain.model.repository;
+
+public class MovementRepositoryPort {
+
+}

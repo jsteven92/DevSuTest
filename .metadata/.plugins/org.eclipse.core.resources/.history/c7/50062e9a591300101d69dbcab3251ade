@@ -1,0 +1,8 @@
+package com.devsu.bank.infraestructure.database.mysql.adapter;
+
+import com.devsu.bank.domain.model.Movement;
+import com.devsu.bank.domain.model.repository.RepositoryPort;
+
+public class MovementRepositoryAdapter implements RepositoryPort<Movement> {
+
+}

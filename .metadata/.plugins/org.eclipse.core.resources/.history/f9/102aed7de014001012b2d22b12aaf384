@@ -1,0 +1,5 @@
+package com.devsu.bank.infraestructure.config;
+
+public class KafkaTopicConfig {
+
+}

@@ -1,0 +1,35 @@
+package com.devsu.bank.domain.model;
+
+import java.math.BigDecimal;
+
+import com.devsu.bank.domain.model.enums.MovementType;
+
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Movement {
+
+	private Long movementId;
+	
+	private String moventDate;
+	
+	@Enumerated(EnumType.STRING)
+	private MovementType type;
+	
+	@Positive(message = "amount must be greater than zero, please select correct movement type ")
+	@NotNull(message = "amount is required")
+	private BigDecimal amount;
+	
+	private BigDecimal balance;
+	
+	@NotNull(message = "Account Id is requerid")
+	private Account account;
+}

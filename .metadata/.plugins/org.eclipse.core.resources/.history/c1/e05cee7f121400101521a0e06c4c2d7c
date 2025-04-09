@@ -1,0 +1,41 @@
+package com.devsu.bank.infraestructure.database.mysql.adapter;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Component;
+
+import com.devsu.bank.domain.model.Account;
+import com.devsu.bank.domain.model.Movement;
+import com.devsu.bank.domain.model.repository.RepositoryPort;
+import com.devsu.bank.infraestructure.database.mysql.entity.MovementEntity;
+import com.devsu.bank.infraestructure.database.mysql.repository.MovementJpaRepository;
+import com.devsu.infraestructure.exceptions.LocalNotFoundException;
+
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+@Component
+public class MovementRepositoryAdapter implements RepositoryPort<Movement> {
+
+	private final MovementJpaRepository movementJpaRepository;
+	private final AccountRepositoryAdapter accountRepositoryAdapter;
+	
+	@Override
+	public Optional<Movement> findObjectById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public Movement saveObject(Movement movement) {
+		Account account = accountRepositoryAdapter.findObjectById(movement.getAcount().getAccountId());
+		
+		MovementEntity movementEntity = MovementEntity.fromDomainModel(movement);
+		return movementJpaRepository.save(movementEntity).toDomainModel();
+	}
+
+
+
+	
+}

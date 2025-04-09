@@ -1,0 +1,61 @@
+package com.devsu.bank.usecase;
+
+import java.util.Optional;
+
+import com.devsu.bank.domain.model.Account;
+import com.devsu.bank.domain.model.repository.AccountRepositoryPort;
+import com.devsu.domain.model.repository.ClientRepositoryPort;
+
+import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+public class AccountInteractorImpl implements IAccountInteractor {
+	
+
+	private AccountRepositoryPort port;
+	
+	@Override
+	public Optional<Account> findAccountById(Long id) {
+		return port.findAccountById(id);
+	}
+
+	@Override
+	public Account saveAccount(Account account) {
+		account.setBalance(account.getInicialBalance());
+		return port.saveAccount(account);
+	}
+
+	@Override
+	public Optional<Account> updateObject(Long id, Account accountNew) throws Exception {
+		
+		if(accountNew.getMovementList().size() > 0) {
+			throw new Exception("Invalid Data");
+		}
+		
+		Account accountAct = port.findAccountById(id)
+				.orElseThrow(() -> new EntityNotFoundException("Account with Id " + id +" not found"));
+		
+		if(accountAct.getAccountId() == id) {
+			accountNew.setBalance(accountAct.getBalance());
+			accountNew.setMovementList(null);
+			
+			return Optional.of(port.saveAccount(accountNew));
+		}
+		
+		return Optional.empty();
+	}
+
+	@Override
+	public double updateBalance(Long accountId, double value) {
+		Account account = port.findAccountById(accountId)
+				.orElseThrow(() -> new EntityNotFoundException("Account with Id " + accountId +" not found"));
+		
+		account.setBalance(account.getBalance() + value);
+		
+		port.saveAccount(account);
+		return account.getBalance();
+	}
+
+}

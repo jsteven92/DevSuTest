@@ -1,0 +1,5 @@
+ackage com.devsu.bank.domain.model.repository;
+
+public interface MovementRepositoryPort {
+	
+}

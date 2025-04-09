@@ -1,0 +1,12 @@
+package com.devsu.bank.domain.model.repository;
+
+import java.util.List;
+import java.util.Optional;
+
+import com.devsu.bank.domain.model.Account;
+
+public interface RepositoryPort<P> {
+	Optional<P> findObjectById(Long id);
+	P saveObject(P object);
+	
+}

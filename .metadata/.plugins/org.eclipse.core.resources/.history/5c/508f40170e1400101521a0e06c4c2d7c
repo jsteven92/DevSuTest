@@ -1,0 +1,23 @@
+package com.devsu.bank.infraestructure.database.mysql.adapter;
+
+import java.util.List;
+
+import com.devsu.bank.domain.model.Movement;
+import com.devsu.bank.domain.model.repository.RepositoryPort;
+
+public class MovementRepositoryAdapter implements RepositoryPort<Movement> {
+
+	@Override
+	public List<Movement> findObjectByClientId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Movement saveObject(Movement object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+}

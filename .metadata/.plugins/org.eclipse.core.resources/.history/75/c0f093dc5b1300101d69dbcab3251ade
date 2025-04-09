@@ -1,0 +1,30 @@
+package com.devsu.bank.domain.model;
+
+import com.devsu.bank.domain.model.enums.AccountStatus;
+import com.devsu.bank.domain.model.enums.AccountType;
+
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
+public class Account {
+
+	private Long accountId;
+	
+	@NotBlank(message = "account Number field cannot be empty ")
+	@Size(min = 10,max = 10, message = "example account number xx-xxxx-xx")
+	private String accountNumber;
+	
+	@NotBlank(message = "type field cannot be empty ")
+	@Enumerated(EnumType.STRING)
+	private AccountType type;
+	
+	@NotBlank(message = "inicial balance field cannot be empty ")
+	private final String inicialBalance;
+	
+	@NotBlank(message = "status field cannot be empty ")
+	private AccountStatus status;
+}

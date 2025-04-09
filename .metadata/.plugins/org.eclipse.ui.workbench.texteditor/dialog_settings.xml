@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item key="hasShownOverlayPopupBefore" value="true"/>
+	<section name="java.lang.Class">
+		<item key="replaceBarOpen" value="false"/>
+		<list key="findhistory">
+			<item value="ka"/>
+			<item value="annotationProcess"/>
+			<item value="Lombo"/>
+			<item value="loombo"/>
+			<item value="path"/>
+			<item value="updateObject"/>
+			<item value="processMovement"/>
+			<item value="LocalNotFoundException"/>
+			<item value="jpa"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="447"/>
+		<item key="DIALOG_Y_ORIGIN" value="236"/>
+	</section>
+</section>

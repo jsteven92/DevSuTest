@@ -1,0 +1,5 @@
+package com.devsu.bank.infraestructure.rest.controller;
+
+public class AccountRestController {
+
+}

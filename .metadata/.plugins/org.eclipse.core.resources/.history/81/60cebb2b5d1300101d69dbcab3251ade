@@ -1,0 +1,16 @@
+package com.devsu.bank.domain.model;
+
+import com.devsu.bank.domain.model.enums.MovementType;
+
+public class Movement {
+
+	private Long movementId;
+	
+	private String moventDate;
+	
+	private MovementType type;
+	
+	private double amount;
+	
+	private double balance;
+}

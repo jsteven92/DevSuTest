@@ -1,0 +1,14 @@
+package com.devsu.bank.infraestructure.database.mysql.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.devsu.bank.domain.model.Movement;
+import com.devsu.bank.infraestructure.database.mysql.entity.MovementEntity;
+
+@Repository
+public interface MovementJpaRepository extends JpaRepository<MovementEntity, Long>{
+	List<Movement> findMovementByAccountId(Long accoundId);
+}

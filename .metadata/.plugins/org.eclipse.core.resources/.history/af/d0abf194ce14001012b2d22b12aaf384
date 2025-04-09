@@ -1,0 +1,10 @@
+package com.devsu.bank.infraestructure.database.mysql.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.devsu.bank.infraestructure.database.mysql.entity.MovementEntity;
+
+@Repository
+public interface MovementJpaRepository extends JpaRepository<MovementEntity, Long>{
+}

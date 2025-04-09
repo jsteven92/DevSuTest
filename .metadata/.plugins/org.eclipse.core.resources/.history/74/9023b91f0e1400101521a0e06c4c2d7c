@@ -1,0 +1,32 @@
+package com.devsu.bank.infraestructure.database.mysql.adapter;
+
+import java.util.List;
+
+import org.springframework.stereotype.Component;
+
+import com.devsu.bank.domain.model.Movement;
+import com.devsu.bank.domain.model.repository.RepositoryPort;
+import com.devsu.bank.infraestructure.database.mysql.repository.MovementJpaRepository;
+
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+@Component
+public class MovementRepositoryAdapter implements RepositoryPort<Movement> {
+
+	private final MovementJpaRepository movementJpaRepository;
+	
+	@Override
+	public List<Movement> findObjectByClientId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Movement saveObject(Movement movement) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+}

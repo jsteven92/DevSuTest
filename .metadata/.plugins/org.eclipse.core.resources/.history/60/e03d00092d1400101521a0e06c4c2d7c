@@ -1,0 +1,26 @@
+package com.devsu.bank.infraestructure.rest.controller;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.devsu.bank.domain.model.Account;
+import com.devsu.bank.usecase.IGenericIteractor;
+
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+@RestController
+@RequestMapping("/api/cuentas")
+public class AccountRestController {
+	
+	private IGenericIteractor<Account> genericIteractor;
+	
+	@GetMapping
+	public ResponseEntity<Account> getAccountById(@PathVariable Long accountId){
+		return null;
+	}
+
+}

@@ -1,0 +1,72 @@
+package com.devsu.bank.infraestructure.database.mysql.entity;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import com.devsu.bank.domain.model.Movement;
+import com.devsu.bank.domain.model.enums.MovementType;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Table(name = "movements")
+@Data
+@NoArgsConstructor
+public class MovementEntity {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long movementId;
+	
+	private LocalDateTime moventDate;
+	
+	private MovementType type;
+	
+	private double amount;
+	
+	private double balance;
+	
+    @ManyToOne
+    @JoinColumn(name = "account_id", nullable = false)
+    private AccountEntity account;
+	
+    
+	public Movement toDomainModel() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String dateString = moventDate.format(formatter);
+		return new Movement(movementId,
+				dateString, 
+				type, 
+				amount, 
+				balance, 
+				null);
+	}
+	public static MovementEntity fromDomainModel(Movement movement) {
+		
+		   DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		   LocalDateTime movementDate = LocalDateTime.parse(movement.getMoventDate(), formatter);
+
+		return new MovementEntity(movement.getMovementId(), 
+				movementDate, 
+				movement.getType(), 
+				movement.getAmount(), 
+				movement.getBalance());
+	}
+	
+	public MovementEntity(Long movementId, LocalDateTime moventDate, MovementType type, double amount, double balance) {
+		super();
+		this.movementId = movementId;
+		this.moventDate = moventDate;
+		this.type = type;
+		this.amount = amount;
+		this.balance = balance;
+	}
+}

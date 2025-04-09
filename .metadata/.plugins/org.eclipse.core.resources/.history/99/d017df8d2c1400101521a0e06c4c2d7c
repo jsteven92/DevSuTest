@@ -1,0 +1,6 @@
+package com.devsu.bank.usecase;
+
+public interface IAccountInteractor {
+	boolean validClient(Long clientId);
+	
+}

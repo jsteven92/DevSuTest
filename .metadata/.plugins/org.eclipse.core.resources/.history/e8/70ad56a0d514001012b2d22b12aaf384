@@ -1,0 +1,43 @@
+package com.devsu.bank.infraestructure.exception.feign;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import com.devsu.bank.domain.model.ErrorResponse;
+import com.devsu.bank.infraestructure.exception.LocalNotFoundException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import feign.Response;
+import feign.codec.ErrorDecoder;
+
+@Configuration
+public class FeignErrorConfig {
+
+    @Bean
+    public ErrorDecoder errorDecoder() {
+        return new CustomErrorDecoder();
+    }
+
+    public static class CustomErrorDecoder implements ErrorDecoder {
+
+        private final ErrorDecoder defaultDecoder = new Default();
+
+        @Override
+        public Exception decode(String methodKey, Response response) {
+        	System.out.println(response);
+            try (InputStream body = response.body().asInputStream()) {
+                ObjectMapper mapper = new ObjectMapper();
+                List<ErrorResponse> errors = mapper.readValue(body, new TypeReference<>() {});
+                String msg = errors.get(0).getMessage(); // obtenemos el mensaje
+                return new LocalNotFoundException(msg);
+            } catch (IOException e) {
+                return defaultDecoder.decode(methodKey, response);
+            }
+        }
+    }
+}

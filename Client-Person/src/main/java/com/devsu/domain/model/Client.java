@@ -1,0 +1,27 @@
+package com.devsu.domain.model;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+public class Client{
+	 
+	 private Long clientId;
+	 
+	 @NotBlank(message = "Password field cannot be empty ")
+	 private String password;
+	 
+	 private boolean state;
+	 
+	 @NotNull(message = "It need a person")
+	 private Person person;
+}

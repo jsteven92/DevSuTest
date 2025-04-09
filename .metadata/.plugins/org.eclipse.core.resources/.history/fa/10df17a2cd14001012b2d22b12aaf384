@@ -1,0 +1,14 @@
+package com.devsu.bank.infraestructure.client;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.devsu.bank.domain.model.ClientDto;
+
+@FeignClient( value = "client", url = "http://localhost:8080")
+public interface Client {
+	
+	@RequestMapping("/api/clientes/{clientId}")
+	ClientDto getClientById(@PathVariable Long clientId);
+}

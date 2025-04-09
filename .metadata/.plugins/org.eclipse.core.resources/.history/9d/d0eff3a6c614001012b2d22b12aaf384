@@ -1,0 +1,28 @@
+package com.devsu.bank.infraestructure.events;
+
+import java.util.Date;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.stereotype.Component;
+
+import com.devsu.bank.domain.model.Account;
+
+@Component
+public class AccountEventProducer {
+	private KafkaTemplate<String, Event<?>> producer;
+	
+	@Value("${topic.client:client}")
+	private String topicClient;
+	
+	public void publish(Account account) {
+		AccountCreateEvent created = new AccountCreateEvent();
+		created.setData(account);
+		created.setId(UUID.randomUUID().toString());
+		created.setType(EventType.CREATED);
+		created.setDate(new Date());
+		
+		this.producer.send(topicClient, created);
+	}
+}

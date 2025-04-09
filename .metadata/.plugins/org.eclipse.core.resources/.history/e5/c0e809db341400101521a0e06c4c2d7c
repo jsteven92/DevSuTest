@@ -1,0 +1,8 @@
+package com.devsu.bank.usecase;
+
+import java.util.Optional;
+
+public interface IAccountInteractor {
+	double updateBalance(Long accountId, double value);
+	Optional<P> updateObject(Long id, P object) throws Exception;
+}

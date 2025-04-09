@@ -1,0 +1,37 @@
+package com.devsu.bank.usecase;
+
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
+import com.devsu.bank.domain.model.Account;
+import com.devsu.bank.domain.model.Movement;
+import com.devsu.bank.domain.model.repository.RepositoryPort;
+
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class MovementInteractorImpl implements IGenericIteractor<Movement>{
+	
+	private AccountInteractorImpl accountInteractorImpl;
+	private RepositoryPort<Movement> port;
+	
+	@Override
+	public Optional<Movement> findObjectById(Long id) {
+		return port.findObjectById(id);
+	}
+
+	@Override
+	public Movement saveObject(Movement movement) {
+		Account account = accountInteractorImpl.findObjectById(movement.getAcount().getAccountId())
+				.orElseThrow(() -> new EntityNotFoundException("Account with Id " + movement.getAcount().getAccountId() +" not found"));
+		movement.setAcount(account);
+		
+		accountInteractorImpl.updateBalance(account.getAccountId(), movement.getAmount());
+		
+		return port.saveObject(movement);
+	}
+
+}

@@ -1,0 +1,7 @@
+package com.devsu.bank.infraestructure.database.mysql.adapter;
+
+import com.devsu.bank.domain.model.repository.AccountRepositoryPort;
+
+public class AccountRepositoryAdapter implements AccountRepositoryPort {
+
+}

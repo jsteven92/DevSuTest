@@ -1,0 +1,5 @@
+package com.devsu.bank.infraestructure.exception.feign;
+
+public class FeignErrorConfig {
+
+}

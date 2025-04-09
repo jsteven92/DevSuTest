@@ -1,0 +1,43 @@
+package com.devsu.bank.usecase;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
+
+import org.springframework.stereotype.Component;
+
+import com.devsu.bank.domain.model.Account;
+import com.devsu.bank.domain.model.Movement;
+import com.devsu.bank.domain.model.repository.MovementRepositoryPort;
+
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+@Component
+public class MovementInteractorImpl implements IMovementInterator{
+	
+	private final AccountInteractorImpl accountInteractorImpl;
+	private final MovementRepositoryPort movementRepositoryPort;
+	
+	@Override
+	public Optional<Movement> findMovById(Long id) {
+		return movementRepositoryPort.findMovementById(id);
+	}
+
+	@Override
+	public Movement saveMov(Movement movement) {
+		Account account = accountInteractorImpl.findAccountById(movement.getAccount().getAccountId())
+				.orElseThrow(() -> new EntityNotFoundException("Account with Id " + movement.getAccount().getAccountId() +" not found"));
+		movement.setAccount(account);
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String dateString = LocalDateTime.now().format(formatter);
+		movement.setMoventDate(dateString);
+		
+		accountInteractorImpl.updateBalance(account.getAccountId(), movement.getAmount());
+		
+		return movementRepositoryPort.saveMovement(movement);
+	}
+
+}

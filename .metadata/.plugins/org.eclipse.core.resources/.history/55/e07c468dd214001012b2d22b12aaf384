@@ -1,0 +1,42 @@
+package com.devsu.bank.domain.model;
+
+import com.devsu.domain.model.enums.Gender;
+
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
+public class Person {
+	
+	private Long personId;
+	
+	@NotBlank(message = "Identification field cannot be empty.")
+	private String identification;
+	
+	@NotBlank(message = "Name field cannot be empty ")
+	private String name;
+	
+	@Enumerated(EnumType.STRING)
+	private Gender gender;
+	
+	@Min(value = 0, message = "age format not valid.")
+	private int age;
+	
+	@NotBlank(message = "Name field cannot be empty ")
+	private String address;
+	
+	@Pattern(regexp = "\\d{10}", message = "phone number must have 10 digits")
+	private String phone;
+	
+}

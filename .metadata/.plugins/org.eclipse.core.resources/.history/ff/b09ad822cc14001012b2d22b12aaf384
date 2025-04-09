@@ -1,0 +1,8 @@
+package com.devsu.bank.infraestructure.client;
+
+import org.springframework.cloud.openfeign.FeignClient;
+
+@FeignClient( value = "", url = "")
+public interface FeignClient {
+
+}

@@ -1,0 +1,11 @@
+package com.devsu.bank.domain.model.repository;
+
+import java.util.List;
+
+import com.devsu.bank.domain.model.Account;
+
+public interface AccountRepositoryPort<P> {
+	List<P> findAccountsByClientId();
+	P saveAccount(P account);
+	
+}

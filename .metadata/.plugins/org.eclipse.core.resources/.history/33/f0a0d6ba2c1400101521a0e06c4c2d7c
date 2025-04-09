@@ -1,0 +1,20 @@
+package com.devsu.bank.infraestructure.rest.controller;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.devsu.bank.domain.model.Account;
+
+@RestController
+@RequestMapping("/api/cuentas")
+public class AccountRestController {
+	
+	@GetMapping
+	public ResponseEntity<Account> getAccountById(@PathVariable Long accountId){
+		return null;
+	}
+
+}

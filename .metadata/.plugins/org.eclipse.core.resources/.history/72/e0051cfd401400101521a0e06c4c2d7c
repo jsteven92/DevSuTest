@@ -1,0 +1,5 @@
+package com.devsu.bank.usecase;
+
+public interface IMovementInterator {
+
+}

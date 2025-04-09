@@ -1,0 +1,16 @@
+package com.devsu.bank.domain.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.ToString;
+
+@Data
+@AllArgsConstructor
+@ToString
+public class ClientDto {
+
+	private Long clientId;
+	private String password;
+	private boolean state;
+	private PersonDto person;
+}

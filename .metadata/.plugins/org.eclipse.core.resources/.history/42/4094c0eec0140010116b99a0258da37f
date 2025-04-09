@@ -1,0 +1,5 @@
+package com.devsu.bank.infraestructure.events;
+
+public class EventType {
+
+}

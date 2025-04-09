@@ -1,0 +1,65 @@
+package com.devsu.bank.usecase;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
+
+import org.springframework.stereotype.Component;
+
+import com.devsu.bank.domain.model.Account;
+import com.devsu.bank.domain.model.Movement;
+import com.devsu.bank.domain.model.enums.MovementType;
+import com.devsu.bank.domain.model.repository.MovementRepositoryPort;
+import com.devsu.bank.infraestructure.exception.InsufficientBalanceException;
+import com.devsu.bank.infraestructure.exception.LocalNotFoundException;
+
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+@Component
+public class MovementInteractorImpl implements IMovementInterator {
+
+	private final AccountInteractorImpl accountInteractorImpl;
+	private final MovementRepositoryPort movementRepositoryPort;
+
+	@Override
+	public Optional<Movement> findMovById(Long id) {
+		return movementRepositoryPort.findMovementById(id);
+	}
+
+	@Override
+	public Movement saveMov(Movement movement) {
+		Account account = accountInteractorImpl.findAccountById(movement.getAccount().getAccountId())
+				.orElseThrow(() -> new LocalNotFoundException(
+						"Account with Id " + movement.getAccount().getAccountId() + " not found"));
+		movement.setAccount(account);
+		
+		if(!hasSufficientBalance(account.getBalance(), movement.getAmount(), movement.getType())) {
+			throw new InsufficientBalanceException("Saldo no disponible");
+		}
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		String dateString = LocalDateTime.now().format(formatter);
+		movement.setMoventDate(dateString);
+
+		movement.setBalance(accountInteractorImpl.updateBalance(account.getAccountId(), movement.getAmount()));
+
+		return movementRepositoryPort.saveMovement(movement);
+	}
+
+	public boolean hasSufficientBalance(BigDecimal balance, BigDecimal amount, MovementType type) {
+		
+		switch (type) {
+		case TRANSFER_SAME_BANK: 
+		case TRANSFER_OTHER_BANK:
+			return balance.compareTo(amount) >= 0;
+		break;
+		case DEPOSIT:
+			return true;
+		break;
+		
+		return false;
+	}
+
+}

@@ -1,0 +1,27 @@
+package com.devsu.bank.infraestructure.database.mysql.adapter;
+
+import java.util.Optional;
+
+import com.devsu.bank.domain.model.Account;
+import com.devsu.bank.domain.model.repository.RepositoryPort;
+import com.devsu.bank.infraestructure.database.mysql.repository.AccountJpaRepository;
+
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+public class AccountRepositoryAdapter implements RepositoryPort<Account> {
+	
+	private AccountJpaRepository accountJpaRepository;
+	@Override
+	public Optional<Account> findObjectById(Long id) {
+		return accountJpaRepository.findById(id)
+				.map(account -> account.toDomainModel());
+	}
+	
+	@Override
+	public Account saveObject(Account object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

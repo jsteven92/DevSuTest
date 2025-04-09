@@ -1,0 +1,13 @@
+package com.devsu.bank.usecase;
+
+import java.math.BigDecimal;
+import java.util.Optional;
+
+import com.devsu.bank.domain.model.Account;
+
+public interface IAccountInteractor {
+	Optional<Account> findAccountById(Long id);
+	Account saveAccount(Account account);
+	BigDecimal updateBalance(Long accountId, BigDecimal value);
+	Optional<Account> updateObject(Long id, Account account) throws Exception;
+}

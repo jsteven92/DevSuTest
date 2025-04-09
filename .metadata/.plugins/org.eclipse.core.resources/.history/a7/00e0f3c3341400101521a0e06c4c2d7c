@@ -1,0 +1,9 @@
+package com.devsu.bank.usecase;
+
+import java.util.Optional;
+
+public interface IGenericIteractor<P> {
+	Optional<P> findObjectById(Long id);
+	P saveObject(P object);
+	Optional<P> updateObject(Long id, P object) throws Exception;
+}

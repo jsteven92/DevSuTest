@@ -1,0 +1,36 @@
+package com.devsu.bank.usecase;
+
+import java.util.Optional;
+
+import com.devsu.bank.domain.model.Account;
+import com.devsu.bank.domain.model.Movement;
+import com.devsu.bank.domain.model.repository.MovementRepositoryPort;
+
+import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
+@AllArgsConstructor
+@RequiredArgsConstructor
+public class MovementInteractorImpl implements IMovementInterator{
+	
+	private AccountInteractorImpl accountInteractorImpl;
+	private MovementRepositoryPort movementRepositoryPort;
+	
+	@Override
+	public Optional<Movement> findMovById(Long id) {
+		return movementRepositoryPort.findMovementById(id);
+	}
+
+	@Override
+	public Movement saveMov(Movement movement) {
+		Account account = accountInteractorImpl.findAccountById(movement.getAcount().getAccountId())
+				.orElseThrow(() -> new EntityNotFoundException("Account with Id " + movement.getAcount().getAccountId() +" not found"));
+		movement.setAcount(account);
+		
+		accountInteractorImpl.updateBalance(account.getAccountId(), movement.getAmount());
+		
+		return movementRepositoryPort.saveMovement(movement);
+	}
+
+}

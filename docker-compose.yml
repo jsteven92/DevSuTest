@@ -1,0 +1,77 @@
+
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - 22181:2181
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    ports:
+      - 29092:29092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+  client-person:
+    image: image-client-app:latest
+    container_name: image-client-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql1
+      - kafka
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql1:3306/service1
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+
+  account-movement:
+    image: image-bank-app:latest
+    container_name: image-bank-app
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mysql2
+      - kafka
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql2:3306/service2
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+
+
+  mysql1:
+    image: mysql:8.0
+    container_name: mysql-client-person
+    environment:
+      MYSQL_DATABASE: service1
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mysql1-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  mysql2:
+    image: mysql:8.0
+    container_name: mysql-account-movement
+    environment:
+      MYSQL_DATABASE: service2
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mysql2-data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+  
+volumes:
+  mysql1-data:
+  mysql2-data:
